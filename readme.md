@@ -1,7 +1,7 @@
 # Учебный проект «Куплю. Продам» [![Build status][travis-image]][travis-url]
 
 * Студент: [Sergey](https://up.htmlacademy.ru/nodejs/3/user/809375).
-* Наставник: `Неизвестно`.
+* Наставник: [Nikita Kutselay](https://htmlacademy.ru/profile/id32750)..
 
 ---
 
