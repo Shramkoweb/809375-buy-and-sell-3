@@ -5,7 +5,7 @@
   "main": "./src/service/service.js",
   "scripts": {
     "eslint": "eslint --ext .js src/",
-    "start": "node ./src/service/service.js",
+    "start": "node ./src/service/service.js -g 11",
     "test": "npm run eslint"
   },
   "repository": {
