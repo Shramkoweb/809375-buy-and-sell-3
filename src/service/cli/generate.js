@@ -1,5 +1,6 @@
 "use strict";
 
+const path = require("path");
 const fs = require(`fs`).promises;
 
 const {
@@ -9,7 +10,7 @@ const {
   shuffleArray,
 } = require(`../../utils`);
 
-const FILE_NAME = `mocks.json`;
+const FILE_NAME = path.resolve(__dirname, "../../../", "mocks.json");
 const MAX_DESCRIPTION_COUNT = 5;
 
 const TITLES = [
