@@ -6,6 +6,7 @@
   "scripts": {
     "eslint": "eslint --ext .js src/",
     "start": "node ./src/service/service.js -g 11",
+    "server": "nodemon ./src/service/service.js --server 3000",
     "test": "npm run eslint"
   },
   "repository": {
@@ -24,7 +25,8 @@
   "homepage": "https://github.com/Shramkoweb/809375-buy-and-sell-3#readme",
   "devDependencies": {
     "eslint": "7.17.0",
-    "eslint-config-htmlacademy": "0.6.0"
+    "eslint-config-htmlacademy": "0.6.0",
+    "nodemon": "2.0.7"
   },
   "dependencies": {
     "chalk": "4.1.0",
