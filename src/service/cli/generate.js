@@ -64,7 +64,7 @@ const createMocks = async (count) => {
     .all([titlesContentPromise, categoriesContentPromise, sentencesContentPromise]);
 
   try {
-    const offers = generateOffers(parseInt(count, 10), {
+    const offers = generateOffers(count, {
       titles: removeBlankLines(titles),
       sumRestrict: SumRestrict,
       categories: removeBlankLines(categories),
