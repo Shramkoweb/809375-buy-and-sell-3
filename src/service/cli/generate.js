@@ -9,8 +9,13 @@ const {
   getRandomItemFrom,
   generatePictureFileName,
   shuffleArray,
+  readContent,
+  removeBlankLines,
 } = require(`../../utils`);
 
+const FILE_SENTENCES_PATH = path.resolve(__dirname, `../../../data/sentences.txt`);
+const FILE_TITLES_PATH = path.resolve(__dirname, `../../../data/titles.txt`);
+const FILE_CATEGORIES_PATH = path.resolve(__dirname, `../../../data/categories.txt`);
 const FILE_NAME = path.resolve(__dirname, "../../../", "mocks.json");
 const MAX_DESCRIPTION_COUNT = 5;
 
@@ -82,12 +87,19 @@ const generateOffers = (count, {titles, sentences, categories, sumRestrict}) => 
 };
 
 const createMocks = async (count) => {
+  const titlesContentPromise = readContent(FILE_TITLES_PATH);
+  const sentencesContentPromise = readContent(FILE_SENTENCES_PATH);
+  const categoriesContentPromise = readContent(FILE_CATEGORIES_PATH);
+
+  const [titles, categories, sentences] = await Promise
+    .all([titlesContentPromise, categoriesContentPromise, sentencesContentPromise]);
+
   try {
     const offers = generateOffers(parseInt(count, 10), {
-      titles: TITLES,
+      titles: removeBlankLines(titles),
       sumRestrict: SumRestrict,
-      categories: CATEGORIES,
-      sentences: SENTENCES,
+      categories: removeBlankLines(categories),
+      sentences: removeBlankLines(sentences),
     });
     const content = JSON.stringify(offers);
 
