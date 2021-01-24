@@ -10,7 +10,6 @@ const {
   generatePictureFileName,
   shuffleArray,
   readContent,
-  removeBlankLines,
 } = require(`../../utils`);
 
 const FILE_SENTENCES_PATH = path.resolve(__dirname, `../../../data/sentences.txt`);
@@ -65,10 +64,10 @@ const createMocks = async (count) => {
 
   try {
     const offers = generateOffers(count, {
-      titles: removeBlankLines(titles),
+      titles: titles,
       sumRestrict: SumRestrict,
-      categories: removeBlankLines(categories),
-      sentences: removeBlankLines(sentences),
+      categories: categories,
+      sentences: sentences,
     });
     const content = JSON.stringify(offers);
 

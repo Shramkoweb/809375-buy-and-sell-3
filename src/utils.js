@@ -31,15 +31,17 @@ const generatePictureFileName = (maxPicturesCount) => {
     : `item0${maxPicturesCount}`;
 };
 
+const removeBlankLines = (string) => string.trim().split(`\n`);
+
 const readContent = async (filePath) => {
   try {
-    return await fs.readFile(filePath, `utf8`);
+    const content = await fs.readFile(filePath, `utf8`);
+    return removeBlankLines(content);
   } catch (err) {
     console.error(chalk.red(err));
   }
 };
 
-const removeBlankLines = (string) => string.trim().split(`\n`);
 
 module.exports = {
   getRandomInt,
