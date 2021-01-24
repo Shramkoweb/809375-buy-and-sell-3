@@ -1,7 +1,7 @@
 "use strict";
 
-const path = require("path");
-const chalk = require("chalk");
+const path = require(`path`);
+const chalk = require(`chalk`);
 const fs = require(`fs`).promises;
 
 const {
@@ -15,7 +15,7 @@ const {
 const FILE_SENTENCES_PATH = path.resolve(__dirname, `../../../data/sentences.txt`);
 const FILE_TITLES_PATH = path.resolve(__dirname, `../../../data/titles.txt`);
 const FILE_CATEGORIES_PATH = path.resolve(__dirname, `../../../data/categories.txt`);
-const FILE_NAME = path.resolve(__dirname, "../../../", "mocks.json");
+const FILE_NAME = path.resolve(__dirname, `../../../`, `mocks.json`);
 const MAX_DESCRIPTION_COUNT = 5;
 
 const OfferType = {
@@ -64,10 +64,10 @@ const createMocks = async (count) => {
 
   try {
     const offers = generateOffers(count, {
-      titles: titles,
-      sumRestrict: SumRestrict,
-      categories: categories,
-      sentences: sentences,
+      titles,
+      SumRestrict,
+      categories,
+      sentences,
     });
     const content = JSON.stringify(offers);
 

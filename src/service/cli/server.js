@@ -2,7 +2,7 @@
 
 const chalk = require(`chalk`);
 const http = require(`http`);
-const path = require("path");
+const path = require(`path`);
 const fs = require(`fs`).promises;
 
 const FILENAME = path.resolve(__dirname, `../../..`, `mocks.json`);

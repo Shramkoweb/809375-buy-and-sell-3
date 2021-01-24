@@ -1,6 +1,6 @@
 "use strict";
 
-const chalk = require("chalk");
+const chalk = require(`chalk`);
 const fs = require(`fs`).promises;
 
 const getRandomInt = (min, max) => {
@@ -38,7 +38,7 @@ const readContent = async (filePath) => {
     const content = await fs.readFile(filePath, `utf8`);
     return removeBlankLines(content);
   } catch (err) {
-    console.error(chalk.red(err));
+    return console.error(chalk.red(err));
   }
 };
 
