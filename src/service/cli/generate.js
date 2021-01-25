@@ -1,7 +1,7 @@
 "use strict";
 
-const path = require("path");
-const chalk = require("chalk");
+const path = require(`path`);
+const chalk = require(`chalk`);
 const fs = require(`fs`).promises;
 
 const {
@@ -9,40 +9,14 @@ const {
   getRandomItemFrom,
   generatePictureFileName,
   shuffleArray,
+  readContent,
 } = require(`../../utils`);
 
-const FILE_NAME = path.resolve(__dirname, "../../../", "mocks.json");
+const FILE_SENTENCES_PATH = path.resolve(__dirname, `../../../data/sentences.txt`);
+const FILE_TITLES_PATH = path.resolve(__dirname, `../../../data/titles.txt`);
+const FILE_CATEGORIES_PATH = path.resolve(__dirname, `../../../data/categories.txt`);
+const FILE_NAME = path.resolve(__dirname, `../../../`, `mocks.json`);
 const MAX_DESCRIPTION_COUNT = 5;
-
-const TITLES = [
-  `Продам книги Стивена Кинга`,
-  `Продам новую приставку Sony Playstation 5`,
-  `Продам отличную подборку фильмов на VHS`,
-  `Куплю антиквариат`,
-  `Куплю породистого кота`,
-];
-
-const SENTENCES = [
-  `Товар в отличном состоянии.`,
-  `Пользовались бережно и только по большим праздникам.`,
-  `Продаю с болью в сердце...`,
-  `Бонусом отдам все аксессуары.`,
-  `Даю недельную гарантию.`,
-  `Если товар не понравится — верну всё до последней копейки.`,
-  `Это настоящая находка для коллекционера!`,
-  `Если найдёте дешевле — сброшу цену.`,
-  `Таких предложений больше нет!`,
-  `При покупке с меня бесплатная доставка в черте города.`,
-];
-
-const CATEGORIES = [
-  `Книги`,
-  `Разное`,
-  `Посуда`,
-  `Игры`,
-  `Животные`,
-  `Журналы`,
-];
 
 const OfferType = {
   OFFER: `offer`,
@@ -65,7 +39,6 @@ const CategoryCountRestrict = {
   MAX: 5,
 };
 
-
 const generateOffers = (count, {titles, sentences, categories, sumRestrict}) => {
   return [...Array(count)].map(() => {
     return {
@@ -82,12 +55,19 @@ const generateOffers = (count, {titles, sentences, categories, sumRestrict}) => 
 };
 
 const createMocks = async (count) => {
+  const titlesContentPromise = readContent(FILE_TITLES_PATH);
+  const sentencesContentPromise = readContent(FILE_SENTENCES_PATH);
+  const categoriesContentPromise = readContent(FILE_CATEGORIES_PATH);
+
+  const [titles, categories, sentences] = await Promise
+    .all([titlesContentPromise, categoriesContentPromise, sentencesContentPromise]);
+
   try {
-    const offers = generateOffers(parseInt(count, 10), {
-      titles: TITLES,
-      sumRestrict: SumRestrict,
-      categories: CATEGORIES,
-      sentences: SENTENCES,
+    const offers = generateOffers(count, {
+      titles,
+      SumRestrict,
+      categories,
+      sentences,
     });
     const content = JSON.stringify(offers);
 

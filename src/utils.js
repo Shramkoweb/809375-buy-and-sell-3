@@ -1,5 +1,8 @@
 "use strict";
 
+const chalk = require(`chalk`);
+const fs = require(`fs`).promises;
+
 const getRandomInt = (min, max) => {
   const minimal = Math.ceil(min);
   const maximal = Math.floor(max);
@@ -28,9 +31,23 @@ const generatePictureFileName = (maxPicturesCount) => {
     : `item0${maxPicturesCount}`;
 };
 
+const removeBlankLines = (string) => string.trim().split(`\n`);
+
+const readContent = async (filePath) => {
+  try {
+    const content = await fs.readFile(filePath, `utf8`);
+    return removeBlankLines(content);
+  } catch (err) {
+    return console.error(chalk.red(err));
+  }
+};
+
+
 module.exports = {
   getRandomInt,
   getRandomItemFrom,
   shuffleArray,
   generatePictureFileName,
+  readContent,
+  removeBlankLines,
 };
