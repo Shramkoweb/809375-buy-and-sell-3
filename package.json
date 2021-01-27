@@ -34,7 +34,8 @@
   "dependencies": {
     "chalk": "4.1.0",
     "commander": "^6.2.1",
-    "express": "4.17.1"
+    "express": "4.17.1",
+    "pug": "2.0.4"
   },
   "husky": {
     "hooks": {
