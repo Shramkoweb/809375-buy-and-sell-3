@@ -19,6 +19,9 @@ app.use(`/`, rootRouter);
 app.use(`/my`, myRouter);
 app.use(`/offers`, offersRouter);
 
+app.use((req, res) => res.status(400).render(`errors/400`));
+app.use((req, res) => res.status(500).render(`errors/500`));
+
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
 });
