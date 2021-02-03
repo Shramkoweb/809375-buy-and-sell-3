@@ -50,9 +50,9 @@ const onClientConnect = async (req, res) => {
 module.exports = (port = 3000) => {
   http.createServer(onClientConnect).listen(port).on(`listening`, (err) => {
     if (err) {
-      return console.error(`Ошибка при создании сервера`, err);
+      return console.error(`Server creation error`, err);
     }
 
-    return console.info(chalk.green(`Ожидаю соединений на ${port}`));
+    return console.info(chalk.green(`Waiting for connections on ${port}`));
   });
 };

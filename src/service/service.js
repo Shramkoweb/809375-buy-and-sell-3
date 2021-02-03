@@ -22,7 +22,7 @@ const handleGenerateAction = (value) => {
   const count = parseInt(value, 10);
 
   if (count > OFFERS_MAX_COUNT) {
-    console.info(chalk.blue(`Не больше 1000 объявлений`));
+    console.info(chalk.blue(`No more than 1000 ads`));
     process.exit(1);
   }
 
