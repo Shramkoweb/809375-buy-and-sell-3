@@ -1,58 +1,34 @@
 "use strict";
 
 const chalk = require(`chalk`);
-const http = require(`http`);
+const express = require(`express`);
 const path = require(`path`);
 const fs = require(`fs`).promises;
 
-const FILENAME = path.resolve(__dirname, `../../..`, `mocks.json`);
+const FILE_NAME = path.resolve(__dirname, `../../..`, `mocks.json`);
+const PORT = 3000;
 
-const sendResponse = (res, statusCode, message) => {
-  const template = `
-    <!Doctype html>
-      <html lang="ru">
-      <head>
-        <title>With love from Node</title>
-      </head>
-      <body>${message}</body>
-    </html>`.trim();
+const app = express();
 
-  res.statusCode = statusCode;
-  res.writeHead(statusCode, {
-    "Content-Type": `text/html; charset=UTF-8`,
-  });
+app.use(express.json());
 
-  res.end(template);
-};
+app.get(`/offers`, async (req, res) => {
+  try {
+    const fileContent = await fs.readFile(FILE_NAME, `utf8`);
+    const mocks = JSON.parse(fileContent);
 
-const onClientConnect = async (req, res) => {
-  const notFoundMessageText = `Not found`;
-
-  switch (req.url) {
-    case `/`:
-      try {
-        const fileContent = await fs.readFile(FILENAME);
-        const mocks = JSON.parse(fileContent);
-        const message = mocks.map((post) => `<li>${post.title}</li>`).join(``);
-        sendResponse(res, 200, `<ul>${message}</ul>`);
-      } catch (err) {
-        sendResponse(res, 400, notFoundMessageText);
-      }
-
-      break;
-    default:
-      sendResponse(res, 400, notFoundMessageText);
-      break;
+    res.send(mocks);
+  } catch (error) {
+    res.send(JSON.parse([]));
+    console.log(error);
   }
-};
+});
 
-
-module.exports = (port = 3000) => {
-  http.createServer(onClientConnect).listen(port).on(`listening`, (err) => {
+module.exports = (port = PORT) => {
+  app.listen(port, (err) => {
     if (err) {
       return console.error(`Server creation error`, err);
     }
-
     return console.info(chalk.green(`Waiting for connections on ${port}`));
   });
 };
