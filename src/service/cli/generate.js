@@ -16,13 +16,13 @@ const FILE_SENTENCES_PATH = path.resolve(__dirname, `../../../data/sentences.txt
 const FILE_TITLES_PATH = path.resolve(__dirname, `../../../data/titles.txt`);
 const FILE_CATEGORIES_PATH = path.resolve(__dirname, `../../../data/categories.txt`);
 const FILE_NAME = path.resolve(__dirname, `../../../`, `mocks.json`);
+
 const MAX_DESCRIPTION_COUNT = 5;
 
 const OfferType = {
   OFFER: `offer`,
   SALE: `sale`,
 };
-
 
 const SumRestrict = {
   MIN: 1000,
@@ -39,14 +39,14 @@ const CategoryCountRestrict = {
   MAX: 5,
 };
 
-const generateOffers = (count, {titles, sentences, categories, sumRestrict}) => {
+const generateOffers = (count, {titles, sentences, categories, restrict}) => {
   return [...Array(count)].map(() => {
     return {
       title: getRandomItemFrom(titles),
       picture: generatePictureFileName(getRandomInt(PictureCountRestrict.MIN, PictureCountRestrict.MAX)),
       description: shuffleArray(sentences).slice(0, MAX_DESCRIPTION_COUNT).join(` `),
       type: getRandomItemFrom(Object.values(OfferType)),
-      sum: getRandomInt(sumRestrict.MIN, sumRestrict.MAX),
+      sum: getRandomInt(restrict.MIN, restrict.MAX),
       category: Array(getRandomInt(CategoryCountRestrict.MIN, CategoryCountRestrict.MAX)).fill({}).map(() => {
         return getRandomItemFrom(categories);
       }),
@@ -65,7 +65,7 @@ const createMocks = async (count) => {
   try {
     const offers = generateOffers(count, {
       titles,
-      SumRestrict,
+      restrict: SumRestrict,
       categories,
       sentences,
     });
