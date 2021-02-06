@@ -1,0 +1,13 @@
+"use strict";
+
+const API_DEFAULT_PORT = 3001;
+const FRONT_END_DEFAULT_PORT = 3000;
+const MAX_ID_LENGTH = 21;
+const MAX_COMMENTS_AMOUNT = 5;
+
+module.exports = {
+  API_DEFAULT_PORT,
+  FRONT_END_DEFAULT_PORT,
+  MAX_ID_LENGTH,
+  MAX_COMMENTS_AMOUNT,
+};
