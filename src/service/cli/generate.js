@@ -17,14 +17,15 @@ const {
 const {
   MAX_ID_LENGTH,
   MAX_COMMENTS_AMOUNT,
+  ProjectPath,
 } = require(`../../constants`);
 
-const ROOT_PATH = path.resolve(__dirname, `../../../`);
-const FILE_SENTENCES_PATH = path.resolve(__dirname, ROOT_PATH, `data/sentences.txt`);
-const FILE_TITLES_PATH = path.resolve(__dirname, ROOT_PATH, `data/titles.txt`);
-const FILE_CATEGORIES_PATH = path.resolve(__dirname, ROOT_PATH, `data/categories.txt`);
-const FILE_COMMENTS_PATH = path.resolve(__dirname, ROOT_PATH, `data/comments.txt`);
-const FILE_NAME = path.resolve(__dirname, ROOT_PATH, `mocks.json`);
+const {DATA_FOLDER, ROOT_FOLDER} = ProjectPath;
+const FILE_SENTENCES_PATH = path.resolve(DATA_FOLDER, `sentences.txt`);
+const FILE_TITLES_PATH = path.resolve(DATA_FOLDER, `titles.txt`);
+const FILE_CATEGORIES_PATH = path.resolve(DATA_FOLDER, `categories.txt`);
+const FILE_COMMENTS_PATH = path.resolve(DATA_FOLDER, `comments.txt`);
+const FILE_NAME = path.resolve(ROOT_FOLDER, `mocks.json`);
 
 const MAX_DESCRIPTION_COUNT = 5;
 
