@@ -5,9 +5,7 @@ const {Router} = require(`express`);
 
 const route = new Router();
 
-module.exports = (app, service) => {
-  app.use(`/search`, route);
-
+module.exports = (service) => {
   route.get(`/`, (req, res) => {
     const {query = ``} = req.query;
 
@@ -21,4 +19,6 @@ module.exports = (app, service) => {
 
     res.status(responseStatus).json(searchResults);
   });
+
+  return route;
 };

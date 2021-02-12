@@ -5,12 +5,12 @@ const {Router} = require(`express`);
 
 const route = new Router();
 
-module.exports = (app, service) => {
-  app.use(`/categories`, route);
-
+module.exports = (service) => {
   route.get(`/`, (req, res) => {
     const categories = service.findAll();
     res.status(StatusCodes.OK)
       .json(categories);
   });
+
+  return route;
 };
