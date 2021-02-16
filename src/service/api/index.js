@@ -15,7 +15,6 @@ const {
 } = require(`../data-service`);
 
 module.exports = async () => {
-  console.log(`123123`);
   const route = new Router();
   const dataService = new MockDataService();
   const mockData = await dataService.getData();
