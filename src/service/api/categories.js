@@ -5,9 +5,9 @@ const {Router} = require(`express`);
 
 const route = new Router();
 
-module.exports = (service) => {
+module.exports = (categoryService) => {
   route.get(`/`, (req, res) => {
-    const categories = service.findAll();
+    const categories = categoryService.findAll();
     res.status(StatusCodes.OK)
       .json(categories);
   });

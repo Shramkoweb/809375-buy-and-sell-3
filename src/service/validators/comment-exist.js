@@ -1,7 +1,6 @@
 "use strict";
 
-const {ReasonPhrases} = require(`http-status-codes`);
-const {StatusCodes} = require(`http-status-codes`);
+const {ReasonPhrases, StatusCodes} = require(`http-status-codes`);
 
 module.exports = (commentService) => (req, res, next) => {
   const {commentId} = req.params;

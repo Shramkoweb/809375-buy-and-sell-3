@@ -5,19 +5,17 @@ const {Router} = require(`express`);
 
 const route = new Router();
 
-module.exports = (service) => {
+module.exports = (searchService) => {
   route.get(`/`, (req, res) => {
     const {query = ``} = req.query;
 
     if (!query) {
-      res.status(StatusCodes.BAD_REQUEST).json([]);
-      return;
+      return res.status(StatusCodes.BAD_REQUEST).json([]);
     }
 
-    const searchResults = service.findAll(query);
-    const responseStatus = searchResults.length > 0 ? StatusCodes.OK : StatusCodes.NOT_FOUND;
+    const searchResults = searchService.findAll(query);
 
-    res.status(responseStatus).json(searchResults);
+    return res.status(StatusCodes.OK).json(searchResults);
   });
 
   return route;
