@@ -3,16 +3,18 @@
 const chalk = require(`chalk`);
 const express = require(`express`);
 
-const apiRoutes = require(`../api`);
+const initApiRouter = require(`../api`);
 
 const PORT = 3000;
 
 const app = express();
 
-app.use(express.json());
-app.use(`/api`, apiRoutes);
+module.exports = async (port = PORT) => {
+  const apiRoute = await initApiRouter();
 
-module.exports = (port = PORT) => {
+  app.use(express.json());
+  app.use(`/api`, apiRoute);
+
   app.listen(port, (err) => {
     if (err) {
       return console.error(`Server creation error`, err);

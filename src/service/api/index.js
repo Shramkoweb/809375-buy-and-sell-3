@@ -14,17 +14,15 @@ const {
   SearchService,
 } = require(`../data-service`);
 
-const apiRootRute = new Router();
-
-const mount = async (route) => {
+module.exports = async () => {
+  console.log(`123123`);
+  const route = new Router();
   const dataService = new MockDataService();
   const mockData = await dataService.getData();
 
   route.use(`/categories`, categoriesRoute(new CategoryService(mockData)));
   route.use(`/search`, searchRoute(new SearchService(mockData)));
   route.use(`/offers`, offersRoute(new OfferService(mockData), new CommentService(mockData)));
+
+  return route;
 };
-
-mount(apiRootRute);
-
-module.exports = apiRootRute;
