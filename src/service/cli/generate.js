@@ -2,6 +2,7 @@
 
 const path = require(`path`);
 const chalk = require(`chalk`);
+const {nanoid} = require(`nanoid`);
 const fs = require(`fs`).promises;
 
 const {
@@ -10,12 +11,21 @@ const {
   generatePictureFileName,
   shuffleArray,
   readContent,
+  generateCommentsFrom,
 } = require(`../../utils`);
 
-const FILE_SENTENCES_PATH = path.resolve(__dirname, `../../../data/sentences.txt`);
-const FILE_TITLES_PATH = path.resolve(__dirname, `../../../data/titles.txt`);
-const FILE_CATEGORIES_PATH = path.resolve(__dirname, `../../../data/categories.txt`);
-const FILE_NAME = path.resolve(__dirname, `../../../`, `mocks.json`);
+const {
+  MAX_ID_LENGTH,
+  MAX_COMMENTS_AMOUNT,
+  ProjectPath,
+} = require(`../../constants`);
+
+const {DATA_FOLDER, ROOT_FOLDER} = ProjectPath;
+const FILE_SENTENCES_PATH = path.resolve(DATA_FOLDER, `sentences.txt`);
+const FILE_TITLES_PATH = path.resolve(DATA_FOLDER, `titles.txt`);
+const FILE_CATEGORIES_PATH = path.resolve(DATA_FOLDER, `categories.txt`);
+const FILE_COMMENTS_PATH = path.resolve(DATA_FOLDER, `comments.txt`);
+const FILE_NAME = path.resolve(ROOT_FOLDER, `mocks.json`);
 
 const MAX_DESCRIPTION_COUNT = 5;
 
@@ -39,9 +49,10 @@ const CategoryCountRestrict = {
   MAX: 5,
 };
 
-const generateOffers = (count, {titles, sentences, categories, restrict}) => {
+const generateOffers = (count, {titles, sentences, categories, restrict, comments}) => {
   return [...Array(count)].map(() => {
     return {
+      id: nanoid(MAX_ID_LENGTH),
       title: getRandomItemFrom(titles),
       picture: generatePictureFileName(getRandomInt(PictureCountRestrict.MIN, PictureCountRestrict.MAX)),
       description: shuffleArray(sentences).slice(0, MAX_DESCRIPTION_COUNT).join(` `),
@@ -50,6 +61,7 @@ const generateOffers = (count, {titles, sentences, categories, restrict}) => {
       category: Array(getRandomInt(CategoryCountRestrict.MIN, CategoryCountRestrict.MAX)).fill({}).map(() => {
         return getRandomItemFrom(categories);
       }),
+      comments: generateCommentsFrom(comments, getRandomInt(0, MAX_COMMENTS_AMOUNT)),
     };
   });
 };
@@ -58,9 +70,10 @@ const createMocks = async (count) => {
   const titlesContentPromise = readContent(FILE_TITLES_PATH);
   const sentencesContentPromise = readContent(FILE_SENTENCES_PATH);
   const categoriesContentPromise = readContent(FILE_CATEGORIES_PATH);
+  const commentsContentPromise = readContent(FILE_COMMENTS_PATH);
 
-  const [titles, categories, sentences] = await Promise
-    .all([titlesContentPromise, categoriesContentPromise, sentencesContentPromise]);
+  const [titles, categories, sentences, comments] = await Promise
+    .all([titlesContentPromise, categoriesContentPromise, sentencesContentPromise, commentsContentPromise]);
 
   try {
     const offers = generateOffers(count, {
@@ -68,6 +81,7 @@ const createMocks = async (count) => {
       restrict: SumRestrict,
       categories,
       sentences,
+      comments,
     });
     const content = JSON.stringify(offers);
 

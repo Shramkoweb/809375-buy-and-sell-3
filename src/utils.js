@@ -1,7 +1,12 @@
 "use strict";
 
 const chalk = require(`chalk`);
+const {nanoid} = require(`nanoid`);
 const fs = require(`fs`).promises;
+
+const {
+  MAX_ID_LENGTH,
+} = require(`./constants`);
 
 const getRandomInt = (min, max) => {
   const minimal = Math.ceil(min);
@@ -42,6 +47,20 @@ const readContent = async (filePath) => {
   }
 };
 
+const generateCommentsFrom = (array, count) => {
+  const comments = [];
+
+  for (let i = 0; i < count; i++) {
+    const comment = {
+      id: nanoid(MAX_ID_LENGTH),
+      text: getRandomItemFrom(array),
+    };
+
+    comments.push(comment);
+  }
+
+  return comments;
+};
 
 module.exports = {
   getRandomInt,
@@ -50,4 +69,5 @@ module.exports = {
   generatePictureFileName,
   readContent,
   removeBlankLines,
+  generateCommentsFrom,
 };

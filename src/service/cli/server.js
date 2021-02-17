@@ -2,29 +2,19 @@
 
 const chalk = require(`chalk`);
 const express = require(`express`);
-const path = require(`path`);
-const fs = require(`fs`).promises;
 
-const FILE_NAME = path.resolve(__dirname, `../../..`, `mocks.json`);
+const initApiRouter = require(`../api`);
+
 const PORT = 3000;
 
 const app = express();
 
-app.use(express.json());
+module.exports = async (port = PORT) => {
+  const apiRoute = await initApiRouter();
 
-app.get(`/offers`, async (req, res) => {
-  try {
-    const fileContent = await fs.readFile(FILE_NAME, `utf8`);
-    const mocks = JSON.parse(fileContent);
+  app.use(express.json());
+  app.use(`/api`, apiRoute);
 
-    res.send(mocks);
-  } catch (error) {
-    res.send(JSON.parse([]));
-    console.log(error);
-  }
-});
-
-module.exports = (port = PORT) => {
   app.listen(port, (err) => {
     if (err) {
       return console.error(`Server creation error`, err);
